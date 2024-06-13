@@ -1,0 +1,86 @@
+
+2024-06-13T12:25:18.711673
+================================ System Message ================================
+
+You will get information about a codebase that is currently on disk in the current folder.
+The user will ask you to write a script that runs the code in a specific way.
+You will answer with code blocks that include all the necessary terminal commands.
+Do not install globally. Do not use sudo.
+Do not explain the code, just give the commands.
+Do not use placeholders, use example values (like . for a folder argument) if necessary.
+
+
+================================ Human Message =================================
+
+
+        Make a unix script that
+        a) installs dependencies
+        b) runs all necessary parts of the codebase (in parallel if necessary)
+        
+Information about the codebase:
+
+```
+File: requirements.txt
+1 numpy
+2 nltk
+
+File: src/main.py
+1 import nltk
+2 from nltk.tokenize import word_tokenize
+3 from nltk.tag import pos_tag
+4 
+5 def extract_proper_nouns(text):
+6     """
+7     Extract proper nouns from a given text.
+8 
+9     Args:
+10         text (str): The input text.
+11 
+12     Returns:
+13         list: A list of extracted proper nouns.
+14     """
+15     tokens = word_tokenize(text)
+16     tagged = pos_tag(tokens)
+17     proper_nouns = [word for word, pos in tagged if pos in ['NNP', 'NNPS']]
+18     return proper_nouns
+19 
+20 def main():
+21     text = "Please provide the text you want to extract proper nouns from."
+22     proper_nouns = extract_proper_nouns(text)
+23     print("Extracted proper nouns:", proper_nouns)
+24 
+25 if __name__ == "__main__":
+26     main()
+
+File: src/nlp_utils.py
+1 import nltk
+2 
+3 def download_nltk_resources():
+4     """
+5     Download required NLTK resources.
+6     """
+7     nltk.download('punkt')
+8     nltk.download('averaged_perceptron_tagger')
+9 
+10 download_nltk_resources()
+
+File: src/__init__.py
+1 # Empty file to make src a package
+
+```
+
+================================== Ai Message ==================================
+
+Here is the Unix script that installs dependencies and runs the codebase:
+```
+#!/bin/bash
+
+# Install dependencies
+python -m pip install -r requirements.txt
+
+# Download NLTK resources
+python src/nlp_utils.py
+
+# Run the main script
+python src/main.py
+```
